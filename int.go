@@ -8,10 +8,10 @@ package goutils
 
 import "strconv"
 
-func MustInt(s string) int {
+func MustInt(s string, defaultVal int) int {
 	i, err := strconv.Atoi(s)
 	if err != nil {
-		panic(err)
+		return defaultVal
 	}
 
 	return i
