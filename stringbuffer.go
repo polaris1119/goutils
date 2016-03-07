@@ -21,7 +21,28 @@ func NewBuffer() *Buffer {
 	return &Buffer{Buffer: new(bytes.Buffer)}
 }
 
-func (b *Buffer) Append(s string) *Buffer {
+func (b *Buffer) Append(i interface{}) *Buffer {
+	switch val := i.(type) {
+	case int:
+		b.append(strconv.Itoa(val))
+	case int64:
+		b.append(strconv.FormatInt(val, 10))
+	case uint:
+		b.append(strconv.FormatUint(uint64(val), 10))
+	case uint64:
+		b.append(strconv.FormatUint(val, 10))
+	case string:
+		b.append(val)
+	case []byte:
+		b.Write(val)
+	case rune:
+		b.WriteRune(val)
+	}
+
+	return b
+}
+
+func (b *Buffer) append(s string) *Buffer {
 	defer func() {
 		if err := recover(); err != nil {
 			log.Println("*****内存不够了！******")
@@ -29,37 +50,5 @@ func (b *Buffer) Append(s string) *Buffer {
 	}()
 
 	b.WriteString(s)
-	return b
-}
-
-func (b *Buffer) AppendInt(i int64) *Buffer {
-	return b.Append(strconv.FormatInt(i, 10))
-}
-
-func (b *Buffer) AppendUint(i uint64) *Buffer {
-	return b.Append(strconv.FormatUint(i, 10))
-}
-
-func (b *Buffer) AppendBytes(p []byte) *Buffer {
-	defer func() {
-		if err := recover(); err != nil {
-			log.Println("*****内存不够了！******")
-		}
-	}()
-
-	b.Write(p)
-
-	return b
-}
-
-func (b *Buffer) AppendRune(r rune) *Buffer {
-	defer func() {
-		if err := recover(); err != nil {
-			log.Println("*****内存不够了！******")
-		}
-	}()
-
-	b.WriteRune(r)
-
 	return b
 }
