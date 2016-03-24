@@ -3,6 +3,7 @@ package goutils
 import (
 	"log"
 	"strconv"
+	"strings"
 )
 
 func MustFloat(s string, defaultVal ...float64) float64 {
@@ -17,7 +18,7 @@ func MustFloat(s string, defaultVal ...float64) float64 {
 		return getDefault()
 	}
 
-	f, err := strconv.ParseFloat(s, 64)
+	f, err := strconv.ParseFloat(strings.TrimSpace(s), 64)
 	if err != nil {
 		log.Println("goutils MustFloat strconv.ParseFloat error:", err)
 		return getDefault()

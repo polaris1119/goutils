@@ -3,6 +3,7 @@ package goutils
 import (
 	"log"
 	"strconv"
+	"strings"
 )
 
 func MustBool(s string, defaultVal ...bool) bool {
@@ -17,7 +18,7 @@ func MustBool(s string, defaultVal ...bool) bool {
 		return getDefault()
 	}
 
-	b, err := strconv.ParseBool(s)
+	b, err := strconv.ParseBool(strings.TrimSpace(s))
 	if err != nil {
 		log.Println("goutils MustBool strconv.ParseBool error:", err)
 		return getDefault()

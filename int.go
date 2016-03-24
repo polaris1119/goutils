@@ -9,6 +9,7 @@ package goutils
 import (
 	"log"
 	"strconv"
+	"strings"
 )
 
 // MustInt 字符串转int
@@ -24,7 +25,7 @@ func MustInt(s string, defaultVal ...int) int {
 		return getDefault()
 	}
 
-	i, err := strconv.Atoi(s)
+	i, err := strconv.Atoi(strings.TrimSpace(s))
 	if err != nil {
 		log.Println("goutils MustInt strconv.Atoi error:", err)
 		return getDefault()
@@ -46,7 +47,7 @@ func MustInt64(s string, defaultVal ...int64) int64 {
 		return getDefault()
 	}
 
-	i, err := strconv.ParseInt(s, 10, 64)
+	i, err := strconv.ParseInt(strings.TrimSpace(s), 10, 64)
 	if err != nil {
 		log.Println("goutils MustInt64 strconv.ParseInt error:", err)
 		return getDefault()
