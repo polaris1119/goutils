@@ -34,7 +34,7 @@ func MustInt(s string, defaultVal ...int) int {
 	return i
 }
 
-// MustInt 字符串转int64
+// MustInt64 字符串转int64
 func MustInt64(s string, defaultVal ...int64) int64 {
 	getDefault := func() int64 {
 		if len(defaultVal) > 0 {
