@@ -7,7 +7,10 @@
 package goutils
 
 import (
+	"fmt"
 	"log"
+	"path/filepath"
+	"runtime"
 	"strconv"
 	"strings"
 )
@@ -27,7 +30,13 @@ func MustInt(s string, defaultVal ...int) int {
 
 	i, err := strconv.Atoi(strings.TrimSpace(s))
 	if err != nil {
-		log.Println("goutils MustInt strconv.Atoi error:", err)
+		msg := "goutils MustInt strconv.Atoi error:" + err.Error()
+		// 加上文件调用和行号
+		_, callerFile, line, ok := runtime.Caller(1)
+		if ok {
+			msg += fmt.Sprintf("file:%s,line:%d", filepath.Base(callerFile), line)
+		}
+		log.Println(msg)
 		return getDefault()
 	}
 
@@ -49,6 +58,13 @@ func MustInt64(s string, defaultVal ...int64) int64 {
 
 	i, err := strconv.ParseInt(strings.TrimSpace(s), 10, 64)
 	if err != nil {
+		msg := "goutils MustInt64 strconv.ParseInt error:" + err.Error()
+		// 加上文件调用和行号
+		_, callerFile, line, ok := runtime.Caller(1)
+		if ok {
+			msg += fmt.Sprintf("file:%s,line:%d", filepath.Base(callerFile), line)
+		}
+		log.Println(msg)
 		log.Println("goutils MustInt64 strconv.ParseInt error:", err)
 		return getDefault()
 	}
