@@ -35,7 +35,7 @@ func MustInt(s string, defaultVal ...int) int {
 		if ok {
 			msg += fmt.Sprintf("file:%s,line:%d", callerFile, line)
 		}
-		log.Println(msg)
+		// log.Println(msg)
 		return getDefault()
 	}
 
@@ -63,8 +63,8 @@ func MustInt64(s string, defaultVal ...int64) int64 {
 		if ok {
 			msg += fmt.Sprintf("file:%s,line:%d", callerFile, line)
 		}
-		log.Println(msg)
-		log.Println("goutils MustInt64 strconv.ParseInt error:", err)
+		// log.Println(msg)
+		// log.Println("goutils MustInt64 strconv.ParseInt error:", err)
 		return getDefault()
 	}
 
